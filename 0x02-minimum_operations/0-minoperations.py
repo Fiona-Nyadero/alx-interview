@@ -1,9 +1,9 @@
 #!/usr/bin/python3
-''''''
+'''Module gets the min no. of copy and paste'''
 
 
 def minOperations(n: int) -> int:
-    ''''''
+    '''Function calculate the min no of operations'''
     if n <= 1:
         return 0
     opertns = 0
