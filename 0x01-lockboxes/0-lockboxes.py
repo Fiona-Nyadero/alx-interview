@@ -13,6 +13,6 @@ def canUnlockAll(boxes):
         for k in boxes[new_koh]:
             if k < len(boxes) and not unlockedboxes[k]:
                 koh.append(k)
-                unlockedboxes[key] = True
+                unlockedboxes[k] = True
 
     return all(unlockedboxes)
