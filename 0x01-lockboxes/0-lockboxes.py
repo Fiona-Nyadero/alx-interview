@@ -4,19 +4,15 @@
 
 def canUnlockAll(boxes):
     '''Returns True or False: all boxes can be unlocked or not'''
-    n = len(boxes)
-    unlockedboxes = set()
-    koh = set([0])
+    unlockedboxes = [False] * len(boxes)
+    unlockedboxes[0] = True
+    koh = [0]
 
     while koh:
-        new_koh = set()
-        for k in koh:
-            unlockedboxes.add(k)
-            new_koh.update(set(boxes[k]) - unlockedboxes)
+        new_koh = koh.pop()
+        for k in boxes[new_koh]:
+            if k < len(boxes) and not unlockedboxes[k]:
+                koh.append(k)
+                unlockedboxes[key] = True
 
-    if len(unlockedboxes) == n:
-        return True
-
-    koh = new_koh
-
-    return len(unlockedboxes) == n
+    return all(unlockedboxes)
