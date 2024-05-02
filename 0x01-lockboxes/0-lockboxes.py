@@ -1,9 +1,9 @@
 #!/usr/bin/python3
-''''''
+'''Module tries to find keys corresponding to their boxes'''
 
 
 def canUnlockAll(boxes):
-    ''''''
+    '''Returns True or False: all boxes can be unlocked or not'''
     n = len(boxes)
     unlockedboxes = set()
     koh = set([0])
