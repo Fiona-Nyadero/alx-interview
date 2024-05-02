@@ -3,6 +3,7 @@
 import sys
 from collections import defaultdict
 
+
 def parse_log():
     '''prints the status codes and file sizes'''
     total_size = 0
@@ -26,6 +27,7 @@ def parse_log():
 
         except (IndexError, ValueError):
             pass
+
 
 if __name__ == "__main__":
     try:
