@@ -1,8 +1,10 @@
 #!/usr/bin/python3
+'''Module reads stdin line by line & computes metrics'''
 import sys
 from collections import defaultdict
 
 def parse_log():
+    '''prints the status codes and file sizes'''
     total_size = 0
     status_codes = defaultdict(int)
     line_count = 0
