@@ -1,36 +1,50 @@
 #!/usr/bin/python3
 '''Module reads stdin line by line & computes metrics'''
 import sys
-from collections import defaultdict
+import re
+import signal
 
+# Global variables to store metrics
+total_file_size = 0
+status_code_counts = {200: 0, 301: 0, 400: 0, 401: 0, 403: 0, 404: 0, 405: 0, 500: 0}
+lines_read = 0
 
-def parse_log():
+def handle_interrupt(signal, frame):
+    '''gracefully exit the program'''
+    print_statistics()
+    sys.exit(0)
+
+def print_statistics():
     '''prints the status codes and file sizes'''
-    total_size = 0
-    status_codes = defaultdict(int)
-    line_count = 0
+    global total_file_size, status_code_counts, lines_read
+    print("File size:", total_file_size)
+    for code, count in sorted(status_code_counts.items()):
+        if count > 0:
+            print(f"{code}: {count}")
+    print()
+    lines_read = 0
 
+def process_log_entry(entry):
+    '''processes the log entry'''
+    global total_file_size, status_code_counts
+    pattern = r'^(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}) - \[.*\] "GET \/projects\/260 HTTP\/1\.1" (\d{3}) (\d+)$'
+    match = re.match(pattern, entry)
+    if match:
+        file_size = int(match.group(3))
+        status_code = int(match.group(2))
+        total_file_size += file_size
+        if status_code in status_code_counts:
+            status_code_counts[status_code] += 1
+
+def main():
+    '''main function'''
+    global lines_read
+    signal.signal(signal.SIGINT, handle_interrupt)
     for line in sys.stdin:
-        try:
-            parts = line.split()
-            status_code = int(parts[-2])
-            file_size = int(parts[-1])
-
-            total_size += file_size
-            status_codes[status_code] += 1
-            line_count += 1
-
-            if line_count % 10 == 0:
-                print(f"Total file size: {total_size}")
-                for code in sorted(status_codes.keys()):
-                    print(f"{code}: {status_codes[code]}")
-
-        except (IndexError, ValueError):
-            pass
-
+        process_log_entry(line.strip())
+        lines_read += 1
+        if lines_read == 10:
+            print_statistics()
 
 if __name__ == "__main__":
-    try:
-        parse_log()
-    except KeyboardInterrupt:
-        print("Keyboard Interrupted")
+    main()
