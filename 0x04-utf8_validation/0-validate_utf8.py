@@ -14,7 +14,7 @@ def validUTF8(data):
                 bytes_checker = 2
             elif (n >> 5) == 0b110:
                 bytes_checker = 1
-            elif (n >> 7):
+            elif (n >> 7) & 1:
                 return False
         else:
             if (n >> 6) != 0b10:
