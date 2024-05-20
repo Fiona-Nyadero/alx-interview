@@ -1,10 +1,10 @@
 #!/usr/bin/python3
-'''Module for the Nqueens game'''
+'''Module implements the Nqueens puzzle'''
 import sys
 
 
 def is_safe(board, row, col):
-    '''Checks if position on board is safe'''
+    '''Checks if position on board is safe for Queens'''
     for f in range(row):
         if board[f] == col or \
            board[f] - f == col - row or \
@@ -14,7 +14,7 @@ def is_safe(board, row, col):
 
 
 def solve_nqueens(board, row, n):
-    '''Places n no. of Queens on board'''
+    '''Places n no. of Queens on board recursively'''
     if row == n:
         print_board(board, n)
         return
@@ -23,15 +23,15 @@ def solve_nqueens(board, row, n):
         if is_safe(board, row, col):
             board[row] = col
             solve_nqueens(board, row + 1, n)
-            board[row] = -1  # Backtrack
+            board[row] = -1
 
 
 def print_board(board, n):
     '''Prints out the board with n Queens on stdout'''
-    solution = []
-    for i in range(n):
-        solution.append([i, board[i]])
-    print(solution)
+    solve = []
+    for f in range(n):
+        solve.append([f, board[f]])
+    print(solve)
 
 
 def main():
@@ -43,11 +43,11 @@ def main():
     try:
         n = int(sys.argv[1])
     except ValueError:
-        print("N must be a number")
+        print("N must be an integer")
         sys.exit(1)
 
     if n < 4:
-        print("N must be at least 4")
+        print("N must be 4 and above")
         sys.exit(1)
 
     board = [-1] * n
