@@ -12,22 +12,22 @@ request(url, (error, response, body) => {
   const filmData = JSON.parse(body);
   const characters = filmData.characters;
 
-  const characterPromises = characters.map(characterUrl => {
+  const charrPromises = characters.map(charrUrl => {
     return new Promise((resolve, reject) => {
-      request(characterUrl, (error, response, body) => {
+      request(charrUrl, (error, response, body) => {
         if (error) {
           reject(error);
           return;
         }
-        const characterData = JSON.parse(body);
-        resolve(characterData.name);
+        const charrData = JSON.parse(body);
+        resolve(charrData.name);
       });
     });
   });
 
-  Promise.all(characterPromises)
-    .then(names => {
-      names.forEach(name => console.log(name));
+  Promise.all(charrPromises)
+    .then(charrnames => {
+      charrnames.forEach(charrname => console.log(charrname));
     })
     .catch(error => console.error(error));
 });
