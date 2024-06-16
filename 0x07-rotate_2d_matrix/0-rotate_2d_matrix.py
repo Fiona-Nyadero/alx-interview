@@ -8,7 +8,7 @@ def rotate_2d_matrix(matrix):
     n = len(matrix)
     for f in range(n):
         for g in range(f+1, n):
-            matrix[f][g], matrix[g][f] = matrix[g][f], matrix[f][g] 
+            matrix[f][g], matrix[g][f] = matrix[g][f], matrix[f][g]
 
     for row in matrix:
         row.reverse()
