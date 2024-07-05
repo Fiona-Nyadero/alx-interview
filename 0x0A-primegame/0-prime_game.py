@@ -10,7 +10,7 @@ def generatePrimes(x):
     for i in range(2, x + 1):
         if sieve[i]:
             primes.append(i)
-            for j in range(i, x + 1, i):
+            for j in range(i * i, x + 1, i):
                 sieve[j] = False
     return primes
 
